@@ -11,7 +11,7 @@ $(document).ready(function() {
 
   $.ajax({
     type:    'GET',
-    url:     'http://localhost:3000/api/v1/posts.json',
+    url:     'https://turing-birdie.herokuapp.com/api/v1/posts.json',
     success: function(posts) {
       $.each(posts, function(index, post) {
         renderPost(post)
