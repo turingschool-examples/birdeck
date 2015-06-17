@@ -29,3 +29,8 @@ h3 {
 input.form-control.post {
   min-height: 40px;
 }
+
+.post {
+  color: white;
+  margin-top: 30px;
+}
