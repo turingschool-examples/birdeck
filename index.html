@@ -4,18 +4,49 @@
 <head>
   <meta charset="utf-8">
   <title>Birdeck</title>
-  <meta name="description" content="The HTML5 Herald">
-  <meta name="author" content="SitePoint">
 </head>
 
 <body>
   <div class="container-fluid">
-    <h1>Birdeck</h1>
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-8">
+        <h1>Birdeck</h1>
+      </div>
+      <div class="col-sm-2"></div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-4">
+        <h3>Latest Posts</h3>
+        <div id="latest-posts"></div>
+      </div>
+      <div class="col-sm-4">
+        <button name="button-fetch" class="btn btn-default pull-right">Fetch Posts</button>
+      </div>
+      <div class="col-sm-2"></div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-8">
+        <hr>
+        <form id="post-form" action="http://turing-birdie" method="post">
+          <div class="form-group">
+            <input class="form-control post" type="text" name="post[description]">
+          </div>
+          <input class="btn btn-default pull-right" type="button" name="submit" value="Create Post">
+        </form>
+      </div>
+      <div class="col-sm-2"></div>
+    </div>
   </div>
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/stylesheets/birdeck.css" type="text/css" media="screen" title="no title" charset="utf-8">
   <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-  <script src="js/scripts.js"></script>
+  <script src="assets/javascripts/birdeck.js"></script>
 </body>
 </html>
