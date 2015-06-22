@@ -1,5 +1,6 @@
 $(document).ready(function() {
   fetchPosts()
+  fetchPostsButton()
   pollData()
   createPost()
   deletePost()
@@ -20,8 +21,8 @@ function renderPost(post) {
 }
 
 function fetchPostsButton() {
-  $("#fetch-button-posts").on("click", function(){
-    fetchPosts(){}
+  $("#button-fetch-posts").on("click", function(){
+    fetchPosts()
     })
 }
 
