@@ -72,7 +72,7 @@ function createPost() {
 }
 
 function deletePost() {
-  $('#latest-posts').delegate('#delete-post', 'click', function() {
+  $('#latest-posts').on('click', '#delete-post', function() {
     var $post = $(this).closest(".post")
 
     $.ajax({
