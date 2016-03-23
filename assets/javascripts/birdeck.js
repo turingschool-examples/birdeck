@@ -1,4 +1,9 @@
+var $latestPosts, $postDescription;
+
 $(document).ready(function() {
+  $latestPosts = $("#latest-posts")
+  $postDescription = $("#post-description")
+
   fetchPosts()
   fetchPostsButton()
   pollData()
