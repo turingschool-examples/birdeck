@@ -60,37 +60,26 @@ function createPost() {
   $("#create-post").on("click", function() {
     var postParams = {
       post: {
-        description: $("#post-description").val()
+        description: $postDescription.val()
       }
     }
 
-    $.ajax({
-      type:    "POST",
-      url:     "https://turing-birdie.herokuapp.com/api/v1/posts.json",
-      data:    postParams,
-      success: function(newPost) {
-        renderPost(newPost)
-      },
-      error: function(xhr) {
-        console.log(xhr.responseText)
-      }
-    })
+  $.post("https://turing-birdie.herokuapp.com/api/v1/posts.json", postParams)
+    .then(renderPost)
+    .then(appendPostsToPage)
+    .fail(handleError)
   })
 }
 
 function deletePost() {
-  $('#latest-posts').on('click', '#delete-post', function() {
+  $latestPosts.on('click', '#delete-post', function() {
     var $post = $(this).closest(".post")
 
     $.ajax({
       type: 'DELETE',
-      url: 'https://turing-birdie.herokuapp.com/api/v1/posts/' + $post.attr('data-id') + ".json",
-      success: function() {
-        $post.remove()
-      },
-      error: function(xhr) {
-        console.log(xhr.responseText)
-      }
-    })
+      url: 'https://turing-birdie.herokuapp.com/api/v1/posts/' + $post.data('id') + ".json"
+    }).then(function () {
+      $post.remove()
+    }).fail(handleError)
   })
 }
