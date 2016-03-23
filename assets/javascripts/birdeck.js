@@ -46,22 +46,10 @@ function fetchPostsButton() {
 }
 
 function fetchPosts() {
-  var newestItemID = parseInt($(".post").last().attr("data-id"))
-
-  $.ajax({
-    type:    "GET",
-    url:     "https://turing-birdie.herokuapp.com/api/v1/posts.json",
-    success: function(posts) {
-      posts.forEach(function(post) {
-        if (isNaN(newestItemID) || post.id > newestItemID) {
-          renderPost(post)
-        }
-      })
-    },
-    error: function(xhr) {
-      console.log(xhr.responseText)
-    }
-  })
+  $.getJSON("https://turing-birdie.herokuapp.com/api/v1/posts.json")
+    .then(renderPosts)
+    .then(addPostsToPage)
+    .fail(handleError)
 }
 
 function pollData() {
