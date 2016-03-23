@@ -12,7 +12,7 @@ $(document).ready(function() {
 })
 
 function renderPost(post) {
-  $("#latest-posts").append(
+  return $(
     "<div class='post' data-id='"
     + post.id
     + "'><h6>Published on "
@@ -22,7 +22,23 @@ function renderPost(post) {
     + "</p>"
     + "<button id='delete-post' name='button-fetch' class='btn btn-default btn-xs'>Delete</button>"
     + "</div>"
-    )
+  )
+}
+
+function renderPosts(posts) {
+  return posts.map(renderPost)
+}
+
+function addPostToPage(post) {
+  $latestPosts.append(post);
+}
+
+function addPostsToPage(posts) {
+  $latestPosts.html(posts)
+}
+
+function handleError(xhr) {
+  console.log(xhr.responseText)
 }
 
 function fetchPostsButton() {
