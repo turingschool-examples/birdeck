@@ -1,4 +1,9 @@
+var $latestPosts, $postDescription;
+
 $(document).ready(function() {
+  $latestPosts = $("#latest-posts")
+  $postDescription = $("#post-description")
+
   fetchPosts()
   fetchPostsButton()
   pollData()
@@ -7,7 +12,7 @@ $(document).ready(function() {
 })
 
 function renderPost(post) {
-  $("#latest-posts").append(
+  return $(
     "<div class='post' data-id='"
     + post.id
     + "'><h6>Published on "
@@ -17,32 +22,34 @@ function renderPost(post) {
     + "</p>"
     + "<button id='delete-post' name='button-fetch' class='btn btn-default btn-xs'>Delete</button>"
     + "</div>"
-    )
+  )
+}
+
+function renderPosts(posts) {
+  return posts.map(renderPost)
+}
+
+function addPostToPage(post) {
+  $latestPosts.append(post);
+}
+
+function addPostsToPage(posts) {
+  $latestPosts.html(posts)
+}
+
+function handleError(xhr) {
+  console.log(xhr.responseText)
 }
 
 function fetchPostsButton() {
-  $("#button-fetch-posts").on("click", function(){
-    fetchPosts()
-    })
+  $("#button-fetch-posts").on("click", fetchPosts)
 }
 
 function fetchPosts() {
-  var newestItemID = parseInt($(".post").last().attr("data-id"))
-
-  $.ajax({
-    type:    "GET",
-    url:     "https://turing-birdie.herokuapp.com/api/v1/posts.json",
-    success: function(posts) {
-      $.each(posts, function(index, post) {
-        if (isNaN(newestItemID) || post.id > newestItemID) {
-          renderPost(post)
-        }
-      })
-    },
-    error: function(xhr) {
-      console.log(xhr.responseText)
-    }
-  })
+  $.getJSON("https://turing-birdie.herokuapp.com/api/v1/posts.json")
+    .then(renderPosts)
+    .then(addPostsToPage)
+    .fail(handleError)
 }
 
 function pollData() {
@@ -53,37 +60,26 @@ function createPost() {
   $("#create-post").on("click", function() {
     var postParams = {
       post: {
-        description: $("#post-description").val()
+        description: $postDescription.val()
       }
     }
 
-    $.ajax({
-      type:    "POST",
-      url:     "https://turing-birdie.herokuapp.com/api/v1/posts.json",
-      data:    postParams,
-      success: function(newPost) {
-        renderPost(newPost)
-      },
-      error: function(xhr) {
-        console.log(xhr.responseText)
-      }
-    })
+  $.post("https://turing-birdie.herokuapp.com/api/v1/posts.json", postParams)
+    .then(renderPost)
+    .then(appendPostsToPage)
+    .fail(handleError)
   })
 }
 
 function deletePost() {
-  $('#latest-posts').on('click', '#delete-post', function() {
+  $latestPosts.on('click', '#delete-post', function() {
     var $post = $(this).closest(".post")
 
     $.ajax({
       type: 'DELETE',
-      url: 'https://turing-birdie.herokuapp.com/api/v1/posts/' + $post.attr('data-id') + ".json",
-      success: function() {
-        $post.remove()
-      },
-      error: function(xhr) {
-        console.log(xhr.responseText)
-      }
-    })
+      url: 'https://turing-birdie.herokuapp.com/api/v1/posts/' + $post.data('id') + ".json"
+    }).then(function () {
+      $post.remove()
+    }).fail(handleError)
   })
 }
