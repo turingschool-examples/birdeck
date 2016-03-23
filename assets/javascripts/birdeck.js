@@ -21,9 +21,7 @@ function renderPost(post) {
 }
 
 function fetchPostsButton() {
-  $("#button-fetch-posts").on("click", function(){
-    fetchPosts()
-    })
+  $("#button-fetch-posts").on("click", fetchPosts)
 }
 
 function fetchPosts() {
