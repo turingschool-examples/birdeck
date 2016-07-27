@@ -1,41 +1,42 @@
 console.log("Hello");
 
 $(document).ready(function(){
-  $("button[name=button-fetch]").on("click", function(){
-    $.ajax({
-      method: "GET",
-      url: "https://birdeck.herokuapp.com/api/v1/posts.json",
-      dataType: "JSON",
-      success: renderPosts
-    });
-  })
+  console.log("Hello");
 
-  $("#create-post").on("click", function(){
-    var postDescription = $("#post-description").val();
-    var postData = { post: { description: postDescription } };
+  var appendPost = function(post){
+    $("#latest-posts").append(
+      "<div class='post' id='post" + post.id + "' contenteditable='true' data-post-id='" + post.id +"'>"
+        + post.description +
+      "</div>" +
+      "<button class='edit-button' data-target='post" + post.id + "'>Update</button>"
+    )
+  }
+
+  $("body").on('click', ".edit-button", function(){
+    var targetPostId = $(this).data("target")
+    var $targetPost = $("#" + targetPostId)
+    // debugger;
+    var id = $targetPost.data("post-id")
+    var postDescription = $targetPost.val()
+    var postData = {post: {description: postDescription}};
     $.ajax({
-      method: "POST",
-      url: "https://birdeck.herokuapp.com/api/v1/posts.json",
-      dataType: "JSON",
-      data: postData,
-      success: function(newPost){
-        $("#latest-posts").append("<div class='post'>" + newPost.description + "</div>");
-      },
-      error: function(errorResponse){
-        console.log(errorResponse.responseText);
-      }
+      url: "http://192.168.30.33:3000/api/v1/posts/" + id + ".json",
+      method: "PATCH",
+      data: postData
     })
   })
 
-  $("#latest-posts").on('click', '.delete-post', function(){
-    var postId = $(this).parent().data('post-id');
+  $("button[name=button-fetch]").on('click', function(){
     $.ajax({
-      method: "DELETE",
-      url: "https://birdeck.herokuapp.com/api/v1/posts/" + postId + ".json",
+      url: "http://192.168.30.33:3000/api/v1/posts.json",
+      method: "GET",
       dataType: "JSON",
-      success: function(deletedPost){
-        alert("Deleted post with id: " + postId);
-        $(".post[data-post-id=" + postId + "]").remove();
+      success: function(posts){
+        $("#latest-posts").html("")
+        console.table(posts)
+        $(posts).each(function(index, post){
+          appendPost(post);
+        })
       },
       error: function(errorResponse){
         console.log(errorResponse)
@@ -44,15 +45,17 @@ $(document).ready(function(){
   })
 
 
-})
-
-function renderPosts(responseObject) {
-  console.table(responseObject);
-  $(responseObject).each(function(index, object){
-    $("#latest-posts").append(
-      "<div class='post' data-post-id='" + object.id + "'>" +
-      object.description + "<br>" +
-      "<a href='#' class='delete-post'>Delete</a></div>"
-    );
+  $("#create-post").on('click', function(){
+    var postDescription = $("#post-description").val()
+    var postData = {post: {description: postDescription}}
+    console.log(postData);
+    $.ajax({
+      method: "POST",
+      url: "http://192.168.30.33:3000/api/v1/posts.json",
+      dataType: "JSON",
+      data: postData,
+      success: appendPost
+    })
   })
-}
+
+});
