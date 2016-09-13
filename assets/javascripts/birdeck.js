@@ -1,7 +1,12 @@
 $(document).ready(function(){
 
+  // We call our functions in the document.ready function
+  // so than we can ensure the entire DOM is loaded before
+  // any element is referenced
+
   fetchPosts();
   fetchPostsButton();
+  createPost();
 
 
 });
@@ -14,7 +19,6 @@ $(document).ready(function(){
 // 4.) Handle a failure
 
   function fetchPosts(){
-    console.log("win")
     // 1.) Send request to get the data
     $.ajax({
       url: "https://turing-birdie.herokuapp.com/api/v1/posts",
@@ -55,4 +59,21 @@ $(document).ready(function(){
     // ===========Enable Button To Fetch Posts With jQuery Event Delegator==============
     function fetchPostsButton(){
       $("button[name=button-fetch]").on("click", fetchPosts);
+    }
+
+
+    // ===========Enable Button To Create Posts With jQuery Event Delegator==============
+    function createPost() {
+      $("#create-post").on("click", function() {
+        var postParams = {
+          post: {
+            description: $("#post-description").val()
+          }
+        }
+
+      $.post("https://turing-birdie.herokuapp.com/api/v1/posts.json", postParams)
+        .then(createPostHTML)
+        .then(renderPosts)
+        .fail(handleError)
+      })
     }
