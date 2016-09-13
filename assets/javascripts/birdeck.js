@@ -16,25 +16,35 @@ $(document).ready(function(){
     // 1.) Send request to get the data
     $.ajax({
       url: "https://turing-birdie.herokuapp.com/api/v1/posts",
-      method: "get",
-      success: function(xhr){
-        // 3.) render template for all Posts
-        for(var i = 0; i < xhr.length; i++ ){
-          $("#latest-posts").append(
-            // 2.) create data and create an HTML template
-            "<div class='post' data-id='"
-            + xhr[i].id
-            + "'><h6>Published on "
-            + xhr[i].created_at
-            + "</h6><p>"
-            + xhr[i].description
-            + "</p>"
-            + "<button id='delete-post' name='button-fetch' class='btn btn-default btn-xs'>Delete</button>"
-            + "</div>") };
-
-        },
-        // 4.) Handle failure
-        failure: function(){console.log(xhr)}
-    })
-
+      method: "get"
+      }
+    ).then(collectPosts)  // 2.0 & 3.0) collect all postsHTML to go render
+    .then(renderPosts)    // 3.1) render posts to page
+    .fail(handleError)    // 4.) handle error
   }
+
+  function renderPosts(postsData){
+    // 3.1) render posts to page
+    $("#latest-posts").html(postsData);
+  }
+
+  function collectPosts(postsData){
+    // 3.0) collect all postsHTML to go render
+      return postsData.map(createPostHTML);  // 2.) create data and create an HTML template
+    }
+
+    // 2.) create data and create an HTML template
+    function createPostHTML(postData){
+      return $("<div class='post' data-id='"
+      + postData.id
+      + "'><h6>Published on "
+      + postData.created_at
+      + "</h6><p>"
+      + postData.description
+      + "</p>"
+      + "<button id='delete-post' name='button-fetch' class='btn btn-default btn-xs'>Delete</button>"
+      + "</div>")
+    }
+
+    // 4.) Handle Error
+    function handleError(data){console.log(data)}
