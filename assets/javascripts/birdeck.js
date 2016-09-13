@@ -1,11 +1,12 @@
 $(document).ready(function(){
 
   fetchPosts();
+  fetchPostsButton();
 
 
 });
 
-
+// ==================FETCH POSTS=============================
 // Fetch Posts when the page loads
 // 1.) Send request to get the data
 // 2.) Take data and create HTML template for the data
@@ -13,6 +14,7 @@ $(document).ready(function(){
 // 4.) Handle a failure
 
   function fetchPosts(){
+    console.log("win")
     // 1.) Send request to get the data
     $.ajax({
       url: "https://turing-birdie.herokuapp.com/api/v1/posts",
@@ -48,3 +50,9 @@ $(document).ready(function(){
 
     // 4.) Handle Error
     function handleError(data){console.log(data)}
+
+
+    // ===========Enable Button To Fetch Posts With jQuery Event Delegator==============
+    function fetchPostsButton(){
+      $("button[name=button-fetch]").on("click", fetchPosts);
+    }
