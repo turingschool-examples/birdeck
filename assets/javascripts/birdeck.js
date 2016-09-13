@@ -7,6 +7,7 @@ $(document).ready(function(){
   fetchPosts();
   fetchPostsButton();
   createPost();
+  deletePosts();
 
 
 });
@@ -55,13 +56,12 @@ $(document).ready(function(){
     // 4.) Handle Error
     function handleError(data){console.log(data)}
 
-
+// =========================================================================================
     // ===========Enable Button To Fetch Posts With jQuery Event Delegator==============
     function fetchPostsButton(){
       $("button[name=button-fetch]").on("click", fetchPosts);
     }
-
-
+// =========================================================================================
     // ===========Enable Button To Create Posts With jQuery Event Delegator==============
     function createPost() {
       $("#create-post").on("click", function() {
@@ -75,5 +75,19 @@ $(document).ready(function(){
         .then(createPostHTML)
         .then(renderPosts)
         .fail(handleError)
+      })
+    }
+// =========================================================================================
+    // ===========Enable Button To Delete Posts With jQuery Event Delegator==============
+    function deletePosts(){
+      $("#latest-posts").on("click", "#delete-post", function(){
+        var $post = $(this).closest(".post")
+        $.ajax({
+          url: "https://turing-birdie.herokuapp.com/api/v1/posts/" + $post.data("id") + ".json",
+          method: "delete"
+        }).then( function(){
+          $post.remove()
+        }).fail(handleError)
+
       })
     }
