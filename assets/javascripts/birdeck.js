@@ -4,10 +4,11 @@ $(document).ready(function(){
   // so than we can ensure the entire DOM is loaded before
   // any element is referenced
 
-  fetchPosts();
+  // fetchPosts();
   fetchPostsButton();
   createPost();
   deletePosts();
+  pollPosts();
 
 
 });
@@ -91,3 +92,10 @@ $(document).ready(function(){
 
       })
     }
+
+// =========================================================================================
+    // ===========Enable Polling Posts With jQuery and setInterval =================
+
+      function pollPosts(){
+        setInterval(fetchPosts, 5000)
+      }
