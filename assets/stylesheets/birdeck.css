@@ -35,3 +35,44 @@ input.form-control.post {
   color: white;
   margin-top: 30px;
 }
+
+#tabs {
+  margin: 20px auto;
+}
+
+#tabs input {
+  margin-bottom: 10px;
+}
+
+#tabs input[type="submit"] {
+  background: none;
+  border-width: 2px;
+  border-color: #263248;
+  color: #263248;
+}
+
+#tabs input[type="submit"]:hover {
+  background: #263248;
+  border-width: 2px;
+  color: #fff;
+}
+
+.ui-widget-header {
+  background: #FF9800;
+}
+
+.ui-state-active,
+.ui-widget-content .ui-state-active,
+.ui-widget-header .ui-state-active,
+a.ui-button:active,
+.ui-button:active,
+.ui-button.ui-state-active:hover {
+  border: 1px solid #263248;
+  background: #263248;
+}
+
+@media (min-width: 600px){
+  #tabs {
+    max-width: 65%;
+  }
+}

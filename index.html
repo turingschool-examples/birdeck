@@ -29,22 +29,46 @@
       <div class="col-sm-2"></div>
     </div>
 
-    <div class="row">
-      <div class="col-sm-2"></div>
-      <div class="col-sm-8">
-        <hr>
-        <div class="form-group">
-          <input class="form-control" type="text" id="post-description">
-        </div>
-        <input class="btn btn-default pull-right" id="create-post" type="button" name="submit" value="Create Post">
+    <div id="tabs" class="row">
+      <ul>
+        <li><a href="#tabs-1">SHOW</a></li>
+        <li><a href="#tabs-2">POST</a></li>
+        <li><a href="#tabs-3">UPDATE</a></li>
+        <li><a href="#tabs-4">DELETE</a></li>
+      </ul>
+      <div id="tabs-1">
+        <form class="show-form form-group">
+          <input type="text" name="show-id" placeholder="ID of post to show" class="form-control">
+          <input type="submit" class="btn btn-primary">
+        </form>
       </div>
-      <div class="col-sm-2"></div>
+      <div id="tabs-2">
+        <form class="post-form form-group">
+          <input type="text" name="post-description" placeholder="Description of post" class="form-control">
+          <input type="submit" class="btn btn-primary">
+        </form>
+      </div>
+      <div id="tabs-3">
+        <form class="update-form form-group">
+          <input type="text" name="update-id" placeholder="ID of post to update" class="form-control">
+          <input type="text" name="post-description" placeholder="Description of post" class="form-control">
+          <input type="submit" class="btn btn-warning">
+        </form>
+      </div>
+      <div id="tabs-4">
+        <form class="delete-form form-group">
+          <input type="text" name="delete-id" placeholder="ID of post to delete" class="form-control">
+          <input type="submit" class="btn btn-danger">
+        </form>
+      </div>
     </div>
   </div>
 
   <link rel="stylesheet" href="assets/stylesheets/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/stylesheets/jquery-ui.css">
   <link rel="stylesheet" href="assets/stylesheets/birdeck.css" type="text/css" media="screen" title="no title" charset="utf-8">
-  <script src="assets/javascripts/jquery-2.1.4.min.js"></script>
+  <script src="assets/javascripts/jquery-3.1.1.min.js"></script>
+  <script src="assets/javascripts/jquery-ui-1.12.1.min.js"></script>
   <script src="assets/javascripts/bootstrap.min.js"></script>
   <script src="assets/javascripts/birdeck.js"></script>
 </body>
